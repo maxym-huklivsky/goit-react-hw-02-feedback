@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Section } from './Section';
 import { FeedbackOptions } from './FeedbackOptions';
 import { Statistics } from './Statistics';
@@ -11,9 +11,9 @@ export class App extends Component {
     bad: 0,
   };
 
-  leaveFeedback = kindOfReview => {
+  leaveFeedback = option => {
     this.setState(prevState => ({
-      [kindOfReview]: prevState[kindOfReview] + 1,
+      [option]: prevState[option] + 1,
     }));
   };
 
@@ -28,17 +28,18 @@ export class App extends Component {
 
     return this.countTotalFeedback() === 0
       ? 0
-      : ((good / this.countTotalFeedback()) * 100).toFixed();
+      : Number(((good / this.countTotalFeedback()) * 100).toFixed());
   };
 
   render() {
     const { good, neutral, bad } = this.state;
+    const feedbackOp = ['good', 'neutral', 'bad'];
 
     return (
       <>
-        <Section title="Please leave feedback">
+        <Section title={'Please leave feedback'}>
           <FeedbackOptions
-            options={['good', 'neutral', 'bad']}
+            options={feedbackOp}
             onLeaveFeedback={this.leaveFeedback}
           />
         </Section>
